@@ -115,6 +115,7 @@ function App() {
                 variant="contained"
                 style={{ height: "2.8rem" }}
                 color="secondary"
+                onClick={() => setSearch("")}
               >
                 Clear
               </Button>
