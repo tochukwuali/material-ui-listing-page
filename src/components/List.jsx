@@ -10,12 +10,21 @@ const columns = [
   { field: "edit", headerName: "", width: 130 },
 ];
 
-const List = ({ rows }) => {
+const List = ({ rows, search }) => {
   console.log(rows);
   return (
     <div style={{ height: 500, width: "100%" }}>
       {rows ? (
         <DataGrid
+          filterModel={{
+            items: [
+              {
+                columnField: "clientName",
+                operatorValue: "contains",
+                value: search,
+              },
+            ],
+          }}
           rows={rows}
           columns={columns}
           pageSize={9}

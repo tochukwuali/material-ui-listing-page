@@ -50,6 +50,7 @@ function App() {
     loading: false,
     rowsData: [],
   });
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     setAppData({ loading: true });
@@ -96,8 +97,10 @@ function App() {
 
                 <InputBase
                   className={classes.input}
-                  placeholder="Search"
+                  placeholder="Search by Name"
                   inputProps={{ "aria-label": "search" }}
+                  onChange={(e) => setSearch(e.target.value)}
+                  value={search}
                 />
               </Paper>
 
@@ -128,7 +131,7 @@ function App() {
               </Button>
             </Box>
           </Grid>
-          <List rows={appData.rowsData} />
+          <List rows={appData.rowsData} search={search} />
         </Container>
       </div>
     </ThemeProvider>
