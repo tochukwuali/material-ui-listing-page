@@ -11,7 +11,6 @@ const columns = [
 ];
 
 const List = ({ rows, search }) => {
-  console.log(rows);
   return (
     <div style={{ height: 500, width: "100%" }}>
       {rows ? (

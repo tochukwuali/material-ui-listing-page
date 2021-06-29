@@ -16,6 +16,7 @@ import AddIcon from "@material-ui/icons/Add";
 import FilterListIcon from "@material-ui/icons/FilterList";
 import SearchIcon from "@material-ui/icons/Search";
 import List from "./components/List";
+import AddNewClient from "./components/AddNewClient";
 import "./App.css";
 
 const theme = createMuiTheme({
@@ -24,7 +25,7 @@ const theme = createMuiTheme({
       main: deepPurple[900],
     },
     secondary: {
-      main: "#ffffff",
+      main: "#fff",
     },
   },
 });
@@ -51,6 +52,16 @@ function App() {
     rowsData: [],
   });
   const [search, setSearch] = useState("");
+
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   useEffect(() => {
     setAppData({ loading: true });
@@ -81,9 +92,16 @@ function App() {
               size="large"
               component="span"
               startIcon={<AddIcon />}
+              onClick={handleOpen}
             >
               New Client
             </Button>
+            <AddNewClient
+              open={open}
+              handleClose={handleClose}
+              aria-labelledby="simple-modal-title"
+              aria-describedby="simple-modal-description"
+            />
           </Grid>
           <Grid
             container
