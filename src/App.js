@@ -65,8 +65,7 @@ function App() {
 
   useEffect(() => {
     setAppData({ loading: true });
-    const url =
-      "http://javareesbyapi-env.eba-rtdeyeqd.ap-southeast-2.elasticbeanstalk.com/api/v1/getallclients/tenant/reesby";
+    const url = "/api/v1/getallclients/tenant/reesby";
     axios.get(url).then((res) => {
       const rows = res.data;
       const rowsWithId = [...rows].map((row, i) => ({ ...row, id: i + 1 }));

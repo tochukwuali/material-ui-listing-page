@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 import { createMuiTheme, makeStyles } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
 import {
@@ -14,7 +15,6 @@ import TwitterIcon from "@material-ui/icons/Twitter";
 import InstagramIcon from "@material-ui/icons/Instagram";
 import WebIcon from "@material-ui/icons/Language";
 import SubmitIcon from "@material-ui/icons/Send";
-
 import { green } from "@material-ui/core/colors";
 
 const theme = createMuiTheme({
@@ -68,10 +68,46 @@ const AddClientForm = () => {
   const [fax, setFax] = useState("");
   const [industry, setIndustry] = useState("");
   const [contract, setContract] = useState("");
+  const [websiteUrl, setWebsiteUrl] = useState("");
+  const [twitterUrl, setTwitterUrl] = useState("");
+  const [instagramUrl, setInstagramUrl] = useState("");
+  const [facebookUrl, setFacebookUrl] = useState("");
+
+  function handleSubmit() {
+    console.log("starting");
+    const newClient = {
+      tenantId: "reesby",
+      clientName,
+      clientEmail: emailAddress,
+      clientWorkPhone: workPhone,
+      clientAddress: address,
+      clientPersonalPhone: personalPhone,
+      clientPocName: poc,
+      clientFax: fax,
+      clientIndustry: industry,
+      clientContract: contract,
+      clientWebsite: websiteUrl,
+      twitter: twitterUrl,
+      facebook: facebookUrl,
+      instagram: instagramUrl,
+    };
+    const postUrl = "/api/v1/addclient";
+    const config = {
+      header: {
+        "Content-Type": "application/json",
+      },
+    };
+    axios
+      .post(postUrl, { newClient }, config)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .then((err) => console.log(err));
+  }
 
   const classes = useStyles();
   return (
-    <form className={classes.root} noValidate autoComplete="off">
+    <form className={classes.root} noValidate autoComplete="off" id="myform">
       <Box className={classes.header}>
         <Typography variant="body2">New Client</Typography>
       </Box>
@@ -89,6 +125,7 @@ const AddClientForm = () => {
               value={clientName}
               size="small"
               color="secondary"
+              type="text"
             />
           </Grid>
           <Grid item xs={7}>
@@ -101,6 +138,7 @@ const AddClientForm = () => {
               value={emailAddress}
               size="small"
               color="secondary"
+              type="text"
             />
           </Grid>
           <Grid item xs={5}>
@@ -113,7 +151,7 @@ const AddClientForm = () => {
               value={workPhone}
               size="small"
               color="secondary"
-              type="number"
+              type="tel"
             />
           </Grid>
           <Grid item xs={7}>
@@ -126,6 +164,7 @@ const AddClientForm = () => {
               value={address}
               size="small"
               color="secondary"
+              type="text"
             />
           </Grid>
           <Grid item xs={5}>
@@ -138,7 +177,7 @@ const AddClientForm = () => {
               value={personalPhone}
               size="small"
               color="secondary"
-              type="number"
+              type="tel"
             />
           </Grid>
           <Grid item xs={7}>
@@ -151,6 +190,7 @@ const AddClientForm = () => {
               value={poc}
               size="small"
               color="secondary"
+              type="text"
             />
           </Grid>
           <Grid item xs={5}>
@@ -163,6 +203,7 @@ const AddClientForm = () => {
               value={fax}
               size="small"
               color="secondary"
+              type="text"
             />
           </Grid>
           <Grid item xs={7}>
@@ -175,6 +216,7 @@ const AddClientForm = () => {
               value={industry}
               size="small"
               color="secondary"
+              type="text"
             />
           </Grid>
           <Grid item xs={5}>
@@ -187,6 +229,7 @@ const AddClientForm = () => {
               value={contract}
               size="small"
               color="secondary"
+              type="text"
             />
           </Grid>
           <Grid item xs={6}>
@@ -200,7 +243,10 @@ const AddClientForm = () => {
                     id="website"
                     className={classes.socialInput}
                     label="Website"
+                    onChange={(e) => setWebsiteUrl(e.target.value)}
+                    value={websiteUrl}
                     color="secondary"
+                    type="text"
                   />
                 </Grid>
               </Grid>
@@ -217,24 +263,10 @@ const AddClientForm = () => {
                     id="facebook-logo"
                     className={classes.socialInput}
                     label="Facebook"
+                    onChange={(e) => setFacebookUrl(e.target.value)}
+                    value={facebookUrl}
                     color="secondary"
-                  />
-                </Grid>
-              </Grid>
-            </div>
-          </Grid>
-          <Grid item xs={6}>
-            <div className={classes.margin}>
-              <Grid container spacing={1} alignItems="flex-end">
-                <Grid item>
-                  <TwitterIcon />
-                </Grid>
-                <Grid item xs={10}>
-                  <TextField
-                    id="input-with-icon-grid"
-                    className={classes.socialInput}
-                    label="Instagram"
-                    color="secondary"
+                    type="text"
                   />
                 </Grid>
               </Grid>
@@ -250,8 +282,31 @@ const AddClientForm = () => {
                   <TextField
                     id="input-with-icon-grid"
                     className={classes.socialInput}
-                    label="Twitter"
+                    label="Instagram"
+                    onChange={(e) => setInstagramUrl(e.target.value)}
+                    value={instagramUrl}
                     color="secondary"
+                    type="text"
+                  />
+                </Grid>
+              </Grid>
+            </div>
+          </Grid>
+          <Grid item xs={6}>
+            <div className={classes.margin}>
+              <Grid container spacing={1} alignItems="flex-end">
+                <Grid item>
+                  <TwitterIcon />
+                </Grid>
+                <Grid item xs={10}>
+                  <TextField
+                    id="input-with-icon-grid"
+                    className={classes.socialInput}
+                    label="Twitter"
+                    onChange={(e) => setTwitterUrl(e.target.value)}
+                    value={twitterUrl}
+                    color="secondary"
+                    type="text"
                   />
                 </Grid>
               </Grid>
@@ -263,10 +318,9 @@ const AddClientForm = () => {
         <Button
           variant="contained"
           color="primary"
-          size="large"
           component="span"
           startIcon={<SubmitIcon />}
-          type="submit"
+          onClick={handleSubmit}
         >
           Submit
         </Button>
