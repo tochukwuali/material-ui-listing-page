@@ -4,15 +4,9 @@
   box-sizing: border-box;
 }
 
-body {
-  background-color: aliceblue;
-}
-
 .App {
-  margin: 0 auto;
-  padding: 2rem 0;
-  display: flex;
-  max-width: 90%;
+  max-width: 100%;
+  
 }
 
 .btns-grid {

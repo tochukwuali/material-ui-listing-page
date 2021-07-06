@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useSelector } from 'react-redux'
 import axios from "axios";
 import Typography from "@material-ui/core/Typography";
 import { ThemeProvider } from "@material-ui/styles";
@@ -45,7 +46,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Home = () => {
+const Home = ({history}) => {
+
+  const userLogin = useSelector(state => state.userLogin)
+  const { user } = userLogin
+
   const [appData, setAppData] = useState({
     loading: false,
     rowsData: [],
@@ -63,14 +68,20 @@ const Home = () => {
   };
 
   useEffect(() => {
-    setAppData({ loading: true });
+    if(!user) {
+      history.push('/login')
+    }
+    else {
+       setAppData({ loading: true });
     const url = "/api/v1/getallclients/tenant/reesby";
     axios.get(url).then((res) => {
       const rows = res.data;
       const rowsWithId = [...rows].map((row, i) => ({ ...row, id: i + 1 }));
       setAppData({ loading: false, rowsData: rowsWithId });
     });
-  }, []);
+    }
+   
+  }, [history, user]);
   const classes = useStyles();
   return (
     <ThemeProvider theme={theme}>
