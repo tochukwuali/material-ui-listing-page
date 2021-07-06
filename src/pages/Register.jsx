@@ -1,4 +1,4 @@
-// import { useState, useEfect } from "react";
+import { useState } from "react";
 import { Link } from 'react-router-dom'
 import { makeStyles } from "@material-ui/core/styles";
 import { Button, Card, CardHeader, CardActions, CardContent, TextField, Typography} from "@material-ui/core";
@@ -46,6 +46,9 @@ const useStyles = makeStyles((theme) => ({
 
 const Register = () => {
   const classes = useStyles();
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
   return (
     <div className={classes.card}>
       <Card classes={{root: classes.root}}>
@@ -53,8 +56,9 @@ const Register = () => {
         <CardHeader classes={{ title: classes.title }}
         title="Enter Email and Password"
       />
-        <TextField variant="outlined" label="Email" size="small" className={classes.input} />
-        <TextField variant="outlined" label="Password" size="small" className={classes.input}/>
+       <TextField variant="outlined" label="Email" size="small" type="text" value={name} onChange={e => setName(e.target.value)} className={classes.input} />
+        <TextField variant="outlined" label="Email" size="small" type="text" value={email} onChange={e => setEmail(e.target.value)} className={classes.input} />
+        <TextField variant="outlined" label="Password" size="small" type="password" value={password} onChange={e => setPassword(e.target.value)} className={classes.input}/>
       </CardContent>
       <CardActions>
         <Button className={classes.btn}>Sign Up</Button>
